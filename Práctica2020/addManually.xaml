@@ -1,0 +1,124 @@
+﻿<Window x:Class="Práctica2020.addManuallyWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Práctica2020"
+        xmlns:custom="clr-namespace:IntegerTextBox"
+        mc:Ignorable="d"
+        Icon="GoExcel.ico"
+        Title="GestionDatos" Height="600" Width="450">
+    <TabControl>
+        <TabItem Header="Introducción manual">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <GroupBox Header="Introduccion de coordenadas" Grid.Row="0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <StackPanel Orientation="Horizontal"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Label Content="Coordenada X: " VerticalAlignment="Center"/>
+                            <custom:NumericTextBox x:Name="TextBoxX" Width="160"
+                                                   HorizontalAlignment="Left" Margin="10" Height="20"
+                                                   TextChanged="TextBox_TextChanged"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Label Content="Coordenada Y: " VerticalAlignment="Center"/>
+                            <custom:NumericTextBox x:Name="TextBoxY" Width="160"
+                                                   HorizontalAlignment="Left" Margin="10" Height="20"
+                                                   TextChanged="TextBox_TextChanged"/>
+                        </StackPanel>
+                        <Button Content="Añadir" Name="BotonAniadir" IsEnabled="False"
+                                Grid.Row="0" Grid.ColumnSpan="3"
+                                HorizontalAlignment="Right" Margin="10" Padding="20,2"
+                                Click="addOneElement"/>
+                        <Button Content="Modificar" Name="BotonModificar" IsEnabled="False"
+                                Grid.Row="1" Grid.ColumnSpan="3"
+                                HorizontalAlignment="Right" Margin="10" Padding="20,2"
+                                Click="modifyCoordinate"/>
+                        <Button Content="Eliminar punto" Name="BotonEliminarUno" IsEnabled="False"
+                                Grid.Row="2" Grid.Column="3"
+                                HorizontalAlignment="Right" Margin="10" Padding="20,2"
+                                Click="deleteOneElement"/>
+                    </Grid>                    
+                </GroupBox>
+                
+                <GroupBox Header="Configuración de la linea" Grid.Row="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Margin="10" Width="180" HorizontalAlignment="Left" Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
+                            <Label Content="Color: "/>
+                            <ComboBox  Name="cmbColors" SelectionChanged="cmbColors_SelectionChanged" Width="130">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Rectangle Fill="{Binding Name}" Width="16" Height="16" Margin="0,2,5,2" />
+                                            <TextBlock Text="{Binding Name}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </StackPanel>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Header="Coordenadas X e Y generadas" Grid.Row="2">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <ListView Name="ListViewManual" Grid.Row="0" Margin="10" SelectionChanged="ListView_SelectionChanged" ItemsSource="{Binding listManual}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Coordenada X" 
+                                    DisplayMemberBinding="{Binding CoordinateX}" 
+                                    Width="120"/>
+                                    <GridViewColumn Header="Coordenada Y"
+                                    DisplayMemberBinding="{Binding CoordinateY}"
+                                    Width="160"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <TextBlock Name="TextBlockListView"
+                                   Grid.Row="1" Margin="10"/>
+                        <Button Content="Eliminar todos los puntos" Name="BotonEliminarTodos" IsEnabled="False"
+                                Grid.Row="2" Grid.Column="0"
+                                HorizontalAlignment="Right" Margin="10" Padding="20,2"
+                                Click="deleteAllElements"/>
+                        <Button Content="Añadir coordenadas" Name="butonAniadirPoints"
+                                Grid.Row="2" Grid.Column="0"
+                                HorizontalAlignment="Left" Margin="10" Padding="20,2"
+                                Click="addPointsToCanvas"/>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+        </TabItem>
+    </TabControl>
+</Window>
